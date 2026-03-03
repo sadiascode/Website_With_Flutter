@@ -17,7 +17,7 @@ class _LoginScreenState extends State<LoginScreen> {
         children: [
           Positioned.fill(
             child: Image.asset(
-              "assets/burger.png",
+              "assets/display.jpg",
               fit: BoxFit.cover,
             ),
           ),

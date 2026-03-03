@@ -36,9 +36,38 @@ class _CustomTextfieldState extends State<CustomTextfield> {
           color: Colors.white70,
           fontSize: 15,
         ),
-        border: OutlineInputBorder(
+
+        // 🔥 Glass background
+        filled: true,
+        fillColor: Colors.white.withOpacity(0.1),
+
+        // 🔥 Normal Border
+        enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(12),
+          borderSide: const BorderSide(
+            color: Colors.white54,
+            width: 1.2,
+          ),
         ),
+
+        // 🔥 Focus Border
+        focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(12),
+          borderSide: const BorderSide(
+            color: Color(0xFFE0712D),
+            width: 2,
+          ),
+        ),
+
+        // 🔥 Error Border
+        errorBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(12),
+          borderSide: const BorderSide(
+            color: Colors.red,
+            width: 1.5,
+          ),
+        ),
+
         suffixIcon: widget.isPassword
             ? IconButton(
           icon: Icon(
