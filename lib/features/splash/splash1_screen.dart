@@ -1,17 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:foodservice/features/auth/screen/login_screen.dart';
 import '../commo/custom_button.dart';
-import 'splash1_screen.dart';
 
-class SplashScreen extends StatefulWidget {
-  const SplashScreen({super.key});
+class Splash1Screen extends StatefulWidget {
+  const Splash1Screen({super.key});
 
   @override
-  State<SplashScreen> createState() => _SplashScreenState();
+  State<Splash1Screen> createState() => _Splash1ScreenState();
 }
 
-class _SplashScreenState extends State<SplashScreen> {
-  int _currentPage = 0;
-
+class _Splash1ScreenState extends State<Splash1Screen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -28,19 +26,20 @@ class _SplashScreenState extends State<SplashScreen> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
-                Text(
-                  "Craving Something Delicious?",
+                const Text(
+                  "Fast Delivery, Fresh Taste",
                   textAlign: TextAlign.center,
-                  style: const TextStyle(
+                  style: TextStyle(
                     fontSize: 24,
                     color: Colors.white,
+                    fontWeight: FontWeight.w600,
                   ),
                 ),
                 const SizedBox(height: 10),
-                Text(
-                  "Order your favorite food in just a few taps.",
+                const Text(
+                  "Your favorite meals delivered hot & fresh in minutes.",
                   textAlign: TextAlign.center,
-                  style: const TextStyle(
+                  style: TextStyle(
                     fontSize: 16,
                     color: Colors.white,
                     height: 1.5,
@@ -50,19 +49,19 @@ class _SplashScreenState extends State<SplashScreen> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    _dot(isActive: true),
-                    const SizedBox(width: 12),
                     _dot(isActive: false),
+                    const SizedBox(width: 12),
+                    _dot(isActive: true),
                   ],
                 ),
                 const SizedBox(height: 60),
                 CustomButton(
-                  text: "Explore Now",
+                  text: "Let’s Go",
                   onTap: () {
                     Navigator.pushReplacement(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => const Splash1Screen(),
+                        builder: (context) => const LoginScreen(),
                       ),
                     );
                   },

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:foodservice/features/auth/screen/login_screen.dart';
-import 'package:foodservice/features/splash/splash_screen.dart';
+import 'package:foodservice/features/splash/splash1_screen.dart';
+
+import '../features/splash/splash_screen.dart';
 
 class FoodService extends StatelessWidget {
   const FoodService({super.key});
