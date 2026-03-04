@@ -147,17 +147,60 @@ class _HomeScreenState extends State<HomeScreen> {
           ],
         ),
       ),
-      body: Row(
-        children: [
-          SizedBox(height: 10),
-          const FoodServiceSidebar(),
-          Expanded(
-            child: Container(
-              color: const Color(0xFFFFFAF7),
-
-            ),
-          ),
-        ],
+      body: LayoutBuilder(
+        builder: (context, constraints) {
+          if (constraints.maxWidth > 1200) {
+            return Padding(
+            padding: const EdgeInsets.only(left: 20, top: 20, bottom: 20,),
+            child: Row(
+              children: [
+                Expanded(
+                  flex: 2,
+                  child: const FoodServiceSidebar(),
+                ),
+                Expanded(
+                  flex: 8,
+                  child: Container(
+                    color: const Color(0xFFFFFAF7),
+                  ),
+                ),
+              ],
+            )
+            );
+          }
+          else if (constraints.maxWidth > 800) {
+            return Row(
+              children: [
+                Expanded(
+                  flex: 3,
+                  child: const FoodServiceSidebar(),
+                ),
+                Expanded(
+                  flex: 7,
+                  child: Container(
+                    color: const Color(0xFFFFFAF7),
+                  ),
+                ),
+              ],
+            );
+          }
+          else {
+            return Row(
+              children: [
+                Expanded(
+                  flex: 4,
+                  child: const FoodServiceSidebar(),
+                ),
+                Expanded(
+                  flex: 6,
+                  child: Container(
+                    color: const Color(0xFFFFFAF7),
+                  ),
+                ),
+              ],
+            );
+          }
+        },
       ),
     );
   }
