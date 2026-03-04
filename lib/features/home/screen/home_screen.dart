@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:foodservice/features/home/widget/dashboard_layout.dart';
 import '../widget/custom_mini_button.dart';
 import '../widget/custom_search.dart';
 
@@ -145,6 +146,18 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
           ],
         ),
+      ),
+      body: Row(
+        children: [
+          SizedBox(height: 10),
+          const FoodServiceSidebar(),
+          Expanded(
+            child: Container(
+              color: const Color(0xFFFFFAF7),
+
+            ),
+          ),
+        ],
       ),
     );
   }
