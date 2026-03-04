@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:foodservice/features/commo/custom_button.dart';
+import 'package:foodservice/features/home/screen/home_screen.dart';
 import '../../commo/custom_textfield.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -77,7 +78,14 @@ class _LoginScreenState extends State<LoginScreen> {
 
                     CustomButton(
                       text: "Login",
-                      onTap: () {},
+                      onTap: () {
+                        Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const HomeScreen(),
+                          ),
+                        );
+                      },
                     ),
                   ],
                 ),
