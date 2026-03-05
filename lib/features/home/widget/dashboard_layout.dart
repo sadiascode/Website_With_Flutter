@@ -1,39 +1,5 @@
 import 'package:flutter/material.dart';
 
-void main() {
-  runApp(const DashboardLayout());
-}
-
-
-
-class DashboardLayout extends StatelessWidget {
-  const DashboardLayout({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: Row(
-        children: [
-          const FoodServiceSidebar(),
-          Expanded(
-            child: Container(
-              color: const Color(0xFFF5F5F5),
-              child: const Center(
-                child: Text(
-                  'Main Content Area',
-                  style: TextStyle(
-                    fontSize: 20,
-                    color: Colors.grey,
-                  ),
-                ),
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-}
 
 class FoodServiceSidebar extends StatefulWidget {
   const FoodServiceSidebar({super.key});
@@ -65,14 +31,47 @@ class _FoodServiceSidebarState extends State<FoodServiceSidebar> {
     return Container(
       width: 220,
       height: double.infinity,
-      color: _bgWhite,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          const SizedBox(height: 12),
+      decoration: BoxDecoration(
+        color: _bgWhite,
+        borderRadius: BorderRadius.circular(20),
+        boxShadow: [
+          // Top shadow
+          BoxShadow(
+            color: Colors.black.withOpacity(0.12),
+            blurRadius: 30,
+            spreadRadius: 5,
+            offset: const Offset(0, -8),
+          ),
+          // Bottom shadow
+          BoxShadow(
+            color: Colors.black.withOpacity(0.15),
+            blurRadius: 35,
+            spreadRadius: 6,
+            offset: const Offset(0, 8),
+          ),
+          // Right shadow (same style as others)
+          BoxShadow(
+            color: Colors.black.withOpacity(0.12),
+            blurRadius: 30,
+            spreadRadius: 5,
+            offset: const Offset(8, 0),
+          ),
+          // Left shadow
+          BoxShadow(
+            color: Colors.black.withOpacity(0.08),
+            blurRadius: 20,
+            spreadRadius: 3,
+            offset: const Offset(-4, 0),
+          ),
+        ],
+      ),
+      child: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const SizedBox(height: 12),
 
-          Expanded(
-            child: Padding(
+            Padding(
               padding: const EdgeInsets.symmetric(horizontal: 12),
               child: Column(
                 children: [
@@ -86,10 +85,12 @@ class _FoodServiceSidebarState extends State<FoodServiceSidebar> {
                 ],
               ),
             ),
-          ),
 
-          _buildBottomSection(),
-        ],
+            const SizedBox(height: 20),
+
+            _buildBottomSection(),
+          ],
+        ),
       ),
     );
   }
@@ -100,14 +101,12 @@ class _FoodServiceSidebarState extends State<FoodServiceSidebar> {
 
     return GestureDetector(
       onTap: () => setState(() => _selectedIndex = index),
-      child: AnimatedContainer(
-        duration: const Duration(milliseconds: 200),
-        curve: Curves.easeInOut,
+      child: Container(
         margin: const EdgeInsets.only(bottom: 4),
         padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
         decoration: BoxDecoration(
           color: isSelected ? _orangePrimary : Colors.transparent,
-          borderRadius: BorderRadius.circular(12),
+          borderRadius: BorderRadius.circular(10),
         ),
         child: Row(
           children: [
@@ -121,8 +120,7 @@ class _FoodServiceSidebarState extends State<FoodServiceSidebar> {
               item.label,
               style: TextStyle(
                 fontSize: 14,
-                fontWeight:
-                isSelected ? FontWeight.w600 : FontWeight.w500,
+                fontWeight: isSelected ? FontWeight.w600 : FontWeight.w500,
                 color: isSelected ? Colors.white : _textDark,
               ),
             ),
@@ -185,6 +183,7 @@ class _FoodServiceSidebarState extends State<FoodServiceSidebar> {
       padding: const EdgeInsets.fromLTRB(12, 12, 12, 28),
       child: Column(
         children: [
+          SizedBox(height: 240),
           _buildBottomItem(
             icon: Icons.help_outline_rounded,
             label: 'Help',

@@ -10,7 +10,7 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
-  int _currentPage = 0;
+  final int _currentPage = 0;
 
   @override
   Widget build(BuildContext context) {
