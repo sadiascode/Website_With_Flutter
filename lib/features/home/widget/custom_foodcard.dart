@@ -82,7 +82,7 @@ class CustomFoodcard extends StatelessWidget {
                       color: Colors.grey,
                     ),
                   ),
-                  const SizedBox(height: 8),
+                  const SizedBox(width: 8),
                   Text(
                     "\$ $price",
                     style: TextStyle(
