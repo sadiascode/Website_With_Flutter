@@ -201,13 +201,13 @@ class _HomeScreenState extends State<HomeScreen> {
       case 2:
         return _buildFavouritePage(); // Favourite page
       case 3:
-        return _buildMessagesPage(); // Messages page
+        return _buildMessagesPage();
       case 4:
-        return _buildOrderHistoryPage(); // Order History page
+        return _buildOrderHistoryPage();
       case 5:
-        return _buildProfilePage(); // Profile page
+        return _buildProfilePage();
       default:
-        return _buildFeaturedSection(); // Default to Overview
+        return _buildFeaturedSection();
     }
   }
 
