@@ -2,15 +2,20 @@ import 'package:flutter/material.dart';
 
 
 class FoodServiceSidebar extends StatefulWidget {
-  const FoodServiceSidebar({super.key});
+  final Function(int) onItemSelected;
+  final int selectedIndex;
+
+  const FoodServiceSidebar({
+    super.key,
+    required this.onItemSelected,
+    required this.selectedIndex,
+  });
 
   @override
   State<FoodServiceSidebar> createState() => _FoodServiceSidebarState();
 }
 
 class _FoodServiceSidebarState extends State<FoodServiceSidebar> {
-  int _selectedIndex = 0;
-
   static const Color _orangePrimary = Color(0xffE0712D);
   static const Color _orangeLight = Color(0xFFFFF0EA);
   static const Color _textDark = Color(0xFF1A1A1A);
@@ -23,7 +28,7 @@ class _FoodServiceSidebarState extends State<FoodServiceSidebar> {
     _SidebarItem(icon: Icons.favorite_border_rounded, label: 'Favourite'),
     _SidebarItem(icon: Icons.chat_bubble_outline_rounded, label: 'Messages'),
     _SidebarItem(icon: Icons.history_rounded, label: 'Order History'),
-    _SidebarItem(icon: Icons.more_horiz_rounded, label: 'Others'),
+    _SidebarItem(icon: Icons.person, label: 'Profile'),
   ];
 
   @override
@@ -35,28 +40,24 @@ class _FoodServiceSidebarState extends State<FoodServiceSidebar> {
         color: _bgWhite,
         borderRadius: BorderRadius.circular(20),
         boxShadow: [
-          // Top shadow
           BoxShadow(
             color: Colors.black.withOpacity(0.12),
             blurRadius: 30,
             spreadRadius: 5,
             offset: const Offset(0, -8),
           ),
-          // Bottom shadow
           BoxShadow(
             color: Colors.black.withOpacity(0.15),
             blurRadius: 35,
             spreadRadius: 6,
             offset: const Offset(0, 8),
           ),
-          // Right shadow (same style as others)
           BoxShadow(
             color: Colors.black.withOpacity(0.12),
             blurRadius: 30,
             spreadRadius: 5,
             offset: const Offset(8, 0),
           ),
-          // Left shadow
           BoxShadow(
             color: Colors.black.withOpacity(0.08),
             blurRadius: 20,
@@ -97,10 +98,10 @@ class _FoodServiceSidebarState extends State<FoodServiceSidebar> {
 
   Widget _buildMenuItem(int index) {
     final item = _menuItems[index];
-    final bool isSelected = _selectedIndex == index;
+    final bool isSelected = widget.selectedIndex == index;
 
     return GestureDetector(
-      onTap: () => setState(() => _selectedIndex = index),
+      onTap: () => widget.onItemSelected(index),
       child: Container(
         margin: const EdgeInsets.only(bottom: 4),
         padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
@@ -191,7 +192,7 @@ class _FoodServiceSidebarState extends State<FoodServiceSidebar> {
           ),
           const SizedBox(height: 4),
           _buildBottomItem(
-            icon: Icons.logout_rounded,
+            icon: Icons.delete,
             label: 'Delete Account',
             onTap: () {},
             isLogout: true,
