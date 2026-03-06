@@ -2,10 +2,13 @@ import 'package:flutter/material.dart';
 import 'action_input_bar_widget.dart';
 
 class CustomText extends StatelessWidget {
+  final TextEditingController controller;
+  final Function(String) onSend;
 
   const CustomText({
     super.key,
-
+    required this.controller,
+    required this.onSend,
   });
 
   @override
@@ -31,8 +34,9 @@ class CustomText extends StatelessWidget {
               children: [
                 Expanded(
                   child: TextField(
+                    controller: controller,
                     decoration: const InputDecoration(
-                      hintText: 'Chat with MedAI.....',
+                      hintText: 'Chat with FoodService.....',
                       hintStyle: TextStyle(
                         color: Color(0xFFE67E22),
                         fontSize: 15,
@@ -44,6 +48,7 @@ class CustomText extends StatelessWidget {
                 ),
                 IconButton(
                   onPressed: () {
+                    onSend(controller.text);
                   },
                   icon: const Icon(
                     Icons.send,

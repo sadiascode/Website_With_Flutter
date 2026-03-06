@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:foodservice/features/message/widget/custom_text.dart';
-import '../widget/action_input_bar_widget.dart';
 
 class ChatScreen extends StatefulWidget {
   final bool isActive;
@@ -11,6 +10,36 @@ class ChatScreen extends StatefulWidget {
 }
 
 class _ChatScreenState extends State<ChatScreen> {
+  final List<Map<String, dynamic>> messages = [];
+  final TextEditingController _textController = TextEditingController();
+  bool _isTyping = false;
+
+  void _addMessage(String text, bool isUser) {
+    setState(() {
+      messages.add({
+        "text": text,
+        "isUser": isUser,
+      });
+    });
+  }
+
+  void _sendMessage(String text) {
+    if (text.trim().isEmpty) return;
+    
+    _addMessage(text, true);
+    _textController.clear();
+    
+    setState(() {
+      _isTyping = true;
+    });
+    
+    Future.delayed(const Duration(seconds: 1), () {
+      setState(() {
+        _isTyping = false;
+      });
+      _addMessage("Thanks for your message! Allow me sometime.", false);
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -34,46 +63,73 @@ class _ChatScreenState extends State<ChatScreen> {
       body: Column(
         children: [
 
-          /// chat content
           Expanded(
             child: Column(
               children: [
-                const Padding(
-                  padding: EdgeInsets.symmetric(vertical: 10),
-                  child: Center(
-                    child: SizedBox(
-                      width: 24,
-                      height: 24,
-                      child: CircularProgressIndicator(strokeWidth: 2),
-                    ),
-                  ),
-                ),
 
-                Align(
-                  alignment: Alignment.centerLeft,
-                  child: Container(
-                    margin: const EdgeInsets.symmetric(vertical: 6),
-                    padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 14),
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(12),
-                      border: Border.all(color: Colors.grey),
-                    ),
-                    child: const Text(
-                      "Typing...",
-                      style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 14,
-                        fontStyle: FontStyle.italic,
-                      ),
-                    ),
+                Expanded(
+                  child: ListView.builder(
+                    padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                    itemCount: messages.length + (_isTyping ? 1 : 0),
+                    itemBuilder: (context, index) {
+                      if (index == messages.length && _isTyping) {
+                        return Align(
+                          alignment: Alignment.centerLeft,
+                          child: Container(
+                            margin: const EdgeInsets.symmetric(vertical: 6),
+                            padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 14),
+                            decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(12),
+                              border: Border.all(color: Colors.grey),
+                            ),
+                            child: const Text(
+                              "Typing...",
+                              style: TextStyle(
+                                color: Colors.black,
+                                fontSize: 14,
+                                fontStyle: FontStyle.italic,
+                              ),
+                            ),
+                          ),
+                        );
+                      }
+                      
+                      if (index >= messages.length) return const SizedBox.shrink();
+                      
+                      final message = messages[index];
+                      final isUser = message["isUser"] as bool;
+                      
+                      return Align(
+                        alignment: isUser ? Alignment.centerRight : Alignment.centerLeft,
+                        child: Container(
+                          margin: const EdgeInsets.symmetric(vertical: 6),
+                          padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 14),
+                          decoration: BoxDecoration(
+                            color: isUser ? const Color(0xFFE0712D) : Colors.white,
+                            borderRadius: BorderRadius.circular(12),
+                            border: Border.all(color: Colors.grey),
+                          ),
+                          child: Text(
+                            message["text"] as String,
+                            style: TextStyle(
+                              color: isUser ? Colors.white : Colors.black,
+                              fontSize: 14,
+                            ),
+                          ),
+                        ),
+                      );
+                    },
                   ),
                 ),
               ],
             ),
           ),
 
-          SafeArea(child: CustomText()),
+          SafeArea(child: CustomText(
+            controller: _textController,
+            onSend: _sendMessage,
+          )),
         ],
       ),
     );
