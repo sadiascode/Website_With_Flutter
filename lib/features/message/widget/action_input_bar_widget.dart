@@ -43,10 +43,14 @@ class _ActionInputBarWidgetState extends State<ActionInputBarWidget> {
                 widget.onImageCaptured!(File(image.path));
               }
             },
-            child: const Icon(
-              Icons.camera_alt,
-              size: 28,
-              color: Color(0xFFE67E22),
+            borderRadius: BorderRadius.circular(30),
+            child: const Padding(
+              padding: EdgeInsets.all(8),
+              child: Icon(
+                Icons.camera_alt,
+                size: 28,
+                color: Color(0xFFE67E22),
+              ),
             ),
           ),
 
@@ -93,11 +97,6 @@ class _ActionInputBarWidgetState extends State<ActionInputBarWidget> {
           const Spacer(),
 
           InkWell(
-            child: const Icon(
-              Icons.photo_library,
-              size: 28,
-              color: Color(0xFFE67E22),
-            ),
             onTap: () async {
               final ImagePicker picker = ImagePicker();
               final XFile? image =
@@ -107,6 +106,15 @@ class _ActionInputBarWidgetState extends State<ActionInputBarWidget> {
                 widget.onImageCaptured!(File(image.path));
               }
             },
+            borderRadius: BorderRadius.circular(30),
+            child: const Padding(
+              padding: EdgeInsets.all(8),
+              child: Icon(
+                Icons.photo_library,
+                size: 28,
+                color: Color(0xFFE67E22),
+              ),
+            ),
           ),
         ],
       ),
