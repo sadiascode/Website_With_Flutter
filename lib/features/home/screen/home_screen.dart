@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:foodservice/features/home/widget/custom_banner.dart';
 import 'package:foodservice/features/home/widget/dashboard_layout.dart';
+import '../../message/screen/chat_screen.dart';
 import '../../profile/screen/profile_screen.dart';
 import '../widget/custom_mini_button.dart';
 import '../widget/custom_search.dart';
@@ -359,6 +360,13 @@ class _HomeScreenState extends State<HomeScreen> {
         context,
         MaterialPageRoute(
           builder: (context) => const ProfileScreen(),
+        ),
+      );
+    } else if (index == 3) {
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => const ChatScreen(),
         ),
       );
     } else {
