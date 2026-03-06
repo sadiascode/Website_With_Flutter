@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:foodservice/features/home/widget/custom_banner.dart';
 import 'package:foodservice/features/home/widget/dashboard_layout.dart';
+import '../../profile/screen/profile_screen.dart';
 import '../widget/custom_mini_button.dart';
 import '../widget/custom_search.dart';
 
@@ -15,13 +16,8 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   int _selectedIndex = 0;
 
-  // Callback function to handle sidebar item selection
-  void _onSidebarItemSelected(int index) {
-    setState(() {
-      _selectedIndex = index;
-    });
-  }
 
+  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -106,19 +102,13 @@ class _HomeScreenState extends State<HomeScreen> {
 
                             Row(
                               children: [
-
                                 Expanded(
                                   child: OutlinedButton(
                                     style: OutlinedButton.styleFrom(
-                                      side: const BorderSide(
-                                          color: Colors.grey),
+                                      side: const BorderSide(color: Colors.grey),
                                       shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(
-                                            12),
-                                      ),
-                                      padding: const EdgeInsets.symmetric(
-                                          vertical: 14),
-                                    ),
+                                        borderRadius: BorderRadius.circular(12),),
+                                      padding: const EdgeInsets.symmetric(vertical: 14),),
                                     onPressed: () {
                                       Navigator.pop(context);
                                     },
@@ -195,11 +185,11 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget _buildPage() {
     switch (_selectedIndex) {
       case 0:
-        return _buildFeaturedSection(); // Overview page
+        return _buildFeaturedSection();
       case 1:
-        return _buildFoodOrderPage(); // Food Order page
+        return _buildFoodOrderPage();
       case 2:
-        return _buildFavouritePage(); // Favourite page
+        return _buildFavouritePage();
       case 3:
         return _buildMessagesPage();
       case 4:
@@ -363,6 +353,21 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
+  void _onSidebarItemSelected(int index) {
+    if (index == 5) {
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => const ProfileScreen(),
+        ),
+      );
+    } else {
+      setState(() {
+        _selectedIndex = index;
+      });
+    }
+  }
+
   Widget _buildProfilePage() {
     return Container(
       padding: const EdgeInsets.all(20),
@@ -390,7 +395,7 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
           const SizedBox(height: 20),
           Text(
-            'Manage your profile information here',
+            'Your profile information will appear here',
             style: TextStyle(
               fontSize: 16,
               color: Colors.grey[600],
