@@ -19,8 +19,8 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   int _selectedIndex = 0;
-
-
+  List<int> itemCounts = List.generate(7, (index) => 0);
+  List<bool> isFavourite = List.generate(7, (index) => false);
   
   @override
   Widget build(BuildContext context) {
@@ -604,44 +604,64 @@ class _HomeScreenState extends State<HomeScreen> {
 
                           const SizedBox(height: 18),
 
-
                           Row(
                             children: [
                               Container(
                                 decoration: BoxDecoration(
-                                  border:
-                                  Border.all(color: Colors.grey),
-                                  borderRadius:
-                                  BorderRadius.circular(8),
+                                  border: Border.all(color: Color(0xffE0712D)),
+                                  borderRadius: BorderRadius.circular(8),
                                 ),
                                 child: Row(
                                   mainAxisSize: MainAxisSize.min,
                                   children: [
+
                                     InkWell(
-                                      onTap: () {},
+                                      onTap: () {
+                                        setState(() {
+                                          if (itemCounts[index] > 0) {
+                                            itemCounts[index]--;
+                                          }
+                                        });
+                                      },
                                       child: const Padding(
-                                        padding: EdgeInsets.symmetric(
-                                            horizontal: 8,
-                                            vertical: 4),
-                                        child:
-                                        Icon(Icons.remove, size: 16),
+                                        padding: EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                                        child: Icon(Icons.remove, size: 16, color: Color(0xffE0712D),),
                                       ),
                                     ),
-                                    const Padding(
-                                      padding:
-                                      EdgeInsets.symmetric(horizontal: 12),
-                                      child: Text('0'),
+
+                                    Padding(
+                                      padding: const EdgeInsets.symmetric(horizontal: 12),
+                                      child: Text(
+                                        itemCounts[index].toString(),
+                                      ),
                                     ),
+
                                     InkWell(
-                                      onTap: () {},
+                                      onTap: () {
+                                        setState(() {
+                                          itemCounts[index]++;
+                                        });
+                                      },
                                       child: const Padding(
-                                        padding: EdgeInsets.symmetric(
-                                            horizontal: 8,
-                                            vertical: 4),
-                                        child: Icon(Icons.add, size: 16),
+                                        padding: EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                                        child: Icon(Icons.add, size: 16, color: Color(0xffE0712D),),
                                       ),
                                     ),
                                   ],
+                                ),
+                              ),
+
+                              const SizedBox(width: 10),
+                              IconButton(
+                                onPressed: () {
+                                  setState(() {
+                                    isFavourite[index] = !isFavourite[index];
+                                  });
+                                },
+                                icon: Icon(
+                                  isFavourite[index] ? Icons.favorite : Icons.favorite_border,
+                                  color: const Color(0xffE0712D),
+                                  size: 20,
                                 ),
                               ),
 
