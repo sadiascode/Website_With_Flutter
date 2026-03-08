@@ -4,6 +4,9 @@ import 'package:foodservice/features/home/widget/custom_banner.dart';
 import 'package:foodservice/features/home/widget/dashboard_layout.dart';
 import '../../message/screen/chat_screen.dart';
 import '../../profile/screen/profile_screen.dart';
+import '../../foodorder/screen/food_order_screen.dart';
+import '../../favourite/screen/favourite_screen.dart';
+import '../../orderhistory/screen/order_history_screen.dart';
 import '../widget/custom_mini_button.dart';
 import '../widget/custom_search.dart';
 
@@ -355,24 +358,52 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   void _onSidebarItemSelected(int index) {
-    if (index == 5) {
-      Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (context) => const ProfileScreen(),
-        ),
-      );
-    } else if (index == 3) {
-      Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (context) => const ChatScreen(),
-        ),
-      );
-    } else {
-      setState(() {
-        _selectedIndex = index;
-      });
+    switch (index) {
+      case 1:
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => const FoodOrderScreen(),
+          ),
+        );
+        break;
+      case 2:
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => const FavouriteScreen(),
+          ),
+        );
+        break;
+      case 3:
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => const ChatScreen(),
+          ),
+        );
+        break;
+      case 4:
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => const OrderHistoryScreen(),
+          ),
+        );
+        break;
+      case 5:
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => const ProfileScreen(),
+          ),
+        );
+        break;
+      default:
+        setState(() {
+          _selectedIndex = index;
+        });
+        break;
     }
   }
 

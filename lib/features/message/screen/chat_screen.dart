@@ -50,6 +50,16 @@ class _ChatScreenState extends State<ChatScreen> {
         automaticallyImplyLeading: false,
         elevation: 0,
         backgroundColor: Colors.white,
+        leading: IconButton(
+          onPressed: () {
+            Navigator.pop(context);
+          },
+          icon: const Icon(
+            Icons.arrow_back_ios,
+            color: Color(0xffE0712D),
+            size: 18,
+          ),
+        ),
         title: const Text(
           "Chat",
           style: TextStyle(
