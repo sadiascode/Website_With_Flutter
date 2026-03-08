@@ -633,6 +633,11 @@ class _HomeScreenState extends State<HomeScreen> {
                                       padding: const EdgeInsets.symmetric(horizontal: 12),
                                       child: Text(
                                         itemCounts[index].toString(),
+                                        style: const TextStyle(
+                                          color: Color(0xffE0712D),
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 14,
+                                        ),
                                       ),
                                     ),
 
