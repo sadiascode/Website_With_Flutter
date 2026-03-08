@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:foodservice/features/history/screen/history_screen.dart';
 import 'package:foodservice/features/home/widget/custom_banner.dart';
 import 'package:foodservice/features/home/widget/dashboard_layout.dart';
 import '../../message/screen/chat_screen.dart';
 import '../../profile/screen/profile_screen.dart';
 import '../../foodorder/screen/food_order_screen.dart';
 import '../../favourite/screen/favourite_screen.dart';
-import '../../orderhistory/screen/order_history_screen.dart';
 import '../widget/custom_mini_button.dart';
 import '../widget/custom_search.dart';
 
@@ -387,7 +387,7 @@ class _HomeScreenState extends State<HomeScreen> {
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => const OrderHistoryScreen(),
+            builder: (context) => const HistoryScreen(),
           ),
         );
         break;

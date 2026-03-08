@@ -125,7 +125,7 @@ class _FavouriteScreenState extends State<FavouriteScreen> {
                 ),
                 const SizedBox(height: 10),
                 CustomFavourite(
-                    title: "Veggie Pizza'",
+                    title: "Veggie Pizza",
                     price: "75.50",
                     imageUrl: "assets/pizza.png",
                     onDelete: () {
