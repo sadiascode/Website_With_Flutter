@@ -18,11 +18,11 @@ class CustomNew extends StatelessWidget {
     return GestureDetector(
       onTap: onTap,
       child: Container(
-        height: screenHeight * 0.06,
-        width: screenWidth * 0.95,
+        height: 50,  // Fixed height
+        width: double.infinity,  // Full width
         decoration: BoxDecoration(
           color: Colors.white,
-          borderRadius: BorderRadius.circular(screenWidth * 0.03),
+          borderRadius: BorderRadius.circular(12),  // Fixed border radius
           border: const Border(
             left: BorderSide(color: Color(0xffE0712D), width: 5),
             top: BorderSide(color: Color(0xffE0712D), width: 1),
@@ -33,11 +33,11 @@ class CustomNew extends StatelessWidget {
         child: Align(
           alignment: Alignment.centerLeft,
           child: Padding(
-            padding: EdgeInsets.only(left: screenWidth * 0.03),
+            padding: const EdgeInsets.only(left: 20),  // Fixed padding
             child: Text(
               text,
-              style: TextStyle(
-                fontSize: screenWidth * 0.045,
+              style: const TextStyle(
+                fontSize: 16,  // Fixed font size
                 fontWeight: FontWeight.bold,
                 color: Colors.black,
               ),
