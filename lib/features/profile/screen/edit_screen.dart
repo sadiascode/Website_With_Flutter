@@ -70,19 +70,26 @@ class _EditScreenState extends State<EditScreen> {
               ),
 
               const SizedBox(height: 7),
-              GestureDetector(
-                onTap: (){},
-                child: const Text(
-                  'Change photo',
-                  style: TextStyle(
-                    fontSize: 15,
-                    fontWeight: FontWeight.bold,
-                    color: Color(0xffE0712D),
-                    decoration: TextDecoration.underline,
-                    decorationColor: Color(0xffE0712D),
-                  ),
-                ),
+          GestureDetector(
+            onTap: () async {
+              final ImagePicker picker = ImagePicker();
+              // Pick an image.
+              final XFile? image = await picker.pickImage(
+                source: ImageSource.gallery,
+              );
+            },
+            child: const Text(
+              'Change photo',
+              style: TextStyle(
+                fontSize: 15,
+                fontWeight: FontWeight.bold,
+                color: Color(0xffE0712D),
+                decoration: TextDecoration.underline,
+                decorationColor: Color(0xffE0712D),
               ),
+            ),
+          ),
+
               const SizedBox(height: 15),
               CustomMedium(text: "Profile Info", onTap: () {}),
               const SizedBox(height: 20),

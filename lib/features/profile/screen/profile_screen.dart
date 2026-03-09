@@ -262,6 +262,18 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                     ),
                                   ),
                                   const SizedBox(width: 12),
+                                  TextButton(
+                                    onPressed: () {
+                                      Navigator.of(context).pop();
+                                    },
+                                    child: const Text(
+                                      "Delete",
+                                      style: TextStyle(
+                                        color: Colors.red,
+                                        fontSize: 16,
+                                      ),
+                                    ),
+                                  ),
                                 ],
                               ),
                             ],
@@ -328,12 +340,16 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                     ),
                                   ),
                                   const SizedBox(width: 12),
-
-                                  const Text(
-                                    "Sign Out",
-                                    style: TextStyle(
-                                      color: Colors.red,
-                                      fontSize: 16,
+                                  TextButton(
+                                    onPressed: () {
+                                      Navigator.of(context).pop();
+                                    },
+                                    child: const Text(
+                                      "Sign Out",
+                                      style: TextStyle(
+                                        color: Colors.red,
+                                        fontSize: 16,
+                                      ),
                                     ),
                                   ),
                                 ],
