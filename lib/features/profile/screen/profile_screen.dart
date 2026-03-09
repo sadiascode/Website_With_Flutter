@@ -22,33 +22,33 @@ class _ProfileScreenState extends State<ProfileScreen> {
     final screenHeight = MediaQuery.of(context).size.height;
     final isWeb = screenWidth > 1200;
 
-      return Scaffold(
-        backgroundColor: const Color(0xFFFFFAF7),
-        appBar: AppBar(
-          centerTitle: true,
-          automaticallyImplyLeading: false,
-          elevation: 0,
-          backgroundColor: Colors.white,
+    return Scaffold(
+      backgroundColor: const Color(0xFFFFFAF7),
+      appBar: AppBar(
+        centerTitle: true,
+        automaticallyImplyLeading: false,
+        elevation: 0,
+        backgroundColor: Colors.white,
 
-          leading: IconButton(
-            onPressed: () {
-              Navigator.pop(context);
-            },
-            icon: const Icon(
-              Icons.arrow_back_ios,
-              color: Color(0xffE0712D),
-              size: 18,
-            ),
-          ),
-          title: const Text(
-            "Profile",
-            style: TextStyle(
-              color: Color(0xffE0712D),
-              fontSize: 20,
-              fontWeight: FontWeight.w500,
-            ),
+        leading: IconButton(
+          onPressed: () {
+            Navigator.pop(context);
+          },
+          icon: const Icon(
+            Icons.arrow_back_ios,
+            color: Color(0xffE0712D),
+            size: 18,
           ),
         ),
+        title: const Text(
+          "Profile",
+          style: TextStyle(
+            color: Color(0xffE0712D),
+            fontSize: 20,
+            fontWeight: FontWeight.w500,
+          ),
+        ),
+      ),
 
       body: SingleChildScrollView(
         child: Padding(
@@ -85,12 +85,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       ClipOval(
                         child: Builder(
                           builder: (context) {{
-                              return Icon(
-                                Icons.person,
-                                size: isWeb ? 60 : 50,
-                                color: Colors.grey[600],
-                              );
-                            }
+                            return Icon(
+                              Icons.person,
+                              size: isWeb ? 60 : 50,
+                              color: Colors.grey[600],
+                            );
+                          }
                           },
                         ),
                       ),
@@ -313,13 +313,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                   ),
                                   const SizedBox(width: 12),
 
-                                    const Text(
-                                      "Sign Out",
-                                      style: TextStyle(
-                                        color: Colors.red,
-                                        fontSize: 16,
-                                      ),
+                                  const Text(
+                                    "Sign Out",
+                                    style: TextStyle(
+                                      color: Colors.red,
+                                      fontSize: 16,
                                     ),
+                                  ),
                                 ],
                               ),
                             ],

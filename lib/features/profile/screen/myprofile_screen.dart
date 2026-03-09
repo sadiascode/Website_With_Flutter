@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:foodservice/features/profile/screen/edit_screen.dart';
 import '../widget/custom_medium.dart';
 import '../widget/custom_txt.dart';
 
@@ -14,32 +15,32 @@ class _MyprofileScreenState extends State<MyprofileScreen> {
 
   @override
   Widget build(BuildContext context) {
-   return Scaffold(
-        backgroundColor: const Color(0xFFFFFAF7),
-        appBar: AppBar(
-          centerTitle: true,
-          automaticallyImplyLeading: false,
-          elevation: 0,
-          backgroundColor: Colors.white,
-          leading: IconButton(
-            onPressed: () {
-              Navigator.pop(context);
-            },
-            icon: const Icon(
-              Icons.arrow_back_ios,
-              color: Color(0xffE0712D),
-              size: 18,
-            ),
-          ),
-          title: const Text(
-            "My Profile",
-            style: TextStyle(
-              color: Color(0xffE0712D),
-              fontSize: 20,
-              fontWeight: FontWeight.w500,
-            ),
+    return Scaffold(
+      backgroundColor: const Color(0xFFFFFAF7),
+      appBar: AppBar(
+        centerTitle: true,
+        automaticallyImplyLeading: false,
+        elevation: 0,
+        backgroundColor: Colors.white,
+        leading: IconButton(
+          onPressed: () {
+            Navigator.pop(context);
+          },
+          icon: const Icon(
+            Icons.arrow_back_ios,
+            color: Color(0xffE0712D),
+            size: 18,
           ),
         ),
+        title: const Text(
+          "My Profile",
+          style: TextStyle(
+            color: Color(0xffE0712D),
+            fontSize: 20,
+            fontWeight: FontWeight.w500,
+          ),
+        ),
+      ),
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 15),
@@ -68,10 +69,10 @@ class _MyprofileScreenState extends State<MyprofileScreen> {
                             ),
                             child: ClipOval(
                               child: Icon(
-                                          Icons.person,
-                                          size: 150,
-                                          color: Colors.grey[600],
-                                        ),
+                                Icons.person,
+                                size: 150,
+                                color: Colors.grey[600],
+                              ),
                             ),
                           ),
                         ],
@@ -82,6 +83,12 @@ class _MyprofileScreenState extends State<MyprofileScreen> {
                       right: 16,
                       child: GestureDetector(
                         onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const EditScreen(),
+                            ),
+                          );
                         },
                         child: Container(
                           width: 35,
