@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:foodservice/help&support/screen/help_screen.dart';
 
 
 class FoodServiceSidebar extends StatefulWidget {
@@ -188,13 +189,122 @@ class _FoodServiceSidebarState extends State<FoodServiceSidebar> {
           _buildBottomItem(
             icon: Icons.help_outline_rounded,
             label: 'Help',
-            onTap: () {},
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const HelpScreen(),
+                ),
+              );
+            },
           ),
           const SizedBox(height: 4),
           _buildBottomItem(
             icon: Icons.delete,
             label: 'Delete Account',
-            onTap: () {},
+            onTap: () {
+              showDialog(
+                context: context,
+                barrierDismissible: false,
+                builder: (context) {
+                  return Dialog(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(25),
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.all(24),
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+
+                          Container(
+                            padding: const EdgeInsets.all(15),
+                            decoration: BoxDecoration(
+                              color: const Color(0xffE0712D).withOpacity(
+                                  0.1),
+                              shape: BoxShape.circle,
+                            ),
+                            child: const Icon(
+                              Icons.delete,
+                              color: Color(0xffE0712D),
+                              size: 30,
+                            ),
+                          ),
+
+                          const SizedBox(height: 20),
+
+                          const Text(
+                            "Confirm Delete Account",
+                            style: TextStyle(
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+
+                          const SizedBox(height: 10),
+
+                          const Text(
+                            "Are you sure you want to delete your account?",
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              fontSize: 15,
+                              color: Colors.grey,
+                            ),
+                          ),
+
+                          const SizedBox(height: 25),
+
+                          Row(
+                            children: [
+                              Expanded(
+                                child: OutlinedButton(
+                                  style: OutlinedButton.styleFrom(
+                                    side: const BorderSide(color: Colors.grey),
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(12),),
+                                    padding: const EdgeInsets.symmetric(
+                                        vertical: 14),),
+                                  onPressed: () {
+                                    Navigator.pop(context);
+                                  },
+                                  child: const Text(
+                                    "Cancel",
+                                    style: TextStyle(color: Colors.grey),
+                                  ),
+                                ),
+                              ),
+
+                              const SizedBox(width: 15),
+
+                              Expanded(
+                                child: ElevatedButton(
+                                  style: ElevatedButton.styleFrom(
+                                    backgroundColor: const Color(
+                                        0xffE0712D),
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(
+                                          12),
+                                    ),
+                                    padding: const EdgeInsets.symmetric(
+                                        vertical: 14),
+                                  ),
+                                  onPressed: () {
+                                    Navigator.pop(context);
+                                    print("User Logged Out");
+                                  },
+                                  child: const Text("Delete",
+                                    style: TextStyle(color: Colors.white),),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                    ),
+                  );
+                }
+              );
+            },
             isLogout: true,
           ),
         ],
