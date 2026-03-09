@@ -24,6 +24,17 @@ class _HomeScreenState extends State<HomeScreen> {
   
   @override
   Widget build(BuildContext context) {
+    final screenWidth = MediaQuery.of(context).size.width;
+    final isMobile = screenWidth < 768;
+    final isTablet = screenWidth >= 768 && screenWidth < 1100;
+    
+    // Responsive grid columns
+    int getCrossAxisCount() {
+      if (isMobile) return 1;
+      if (isTablet) return 2;
+      return 3;
+    }
+    
     return Scaffold(
       backgroundColor: const Color(0xFFFFFAF7),
       appBar: AppBar(
@@ -31,158 +42,206 @@ class _HomeScreenState extends State<HomeScreen> {
         backgroundColor: const Color(0xff2F2F2F),
         elevation: 0,
         toolbarHeight: 70,
-        title: Row(
-          children: [
-            const SizedBox(width: 12),
-            SvgPicture.asset(
-              "assets/logo.svg",
-              height: 55,
-              width: 85,
-            ),
+        title: Builder(
+          builder: (context) => Row(
+            children: [
+              // Show menu icon on mobile
+              if (isMobile) ...[
+                IconButton(
+                  icon: const Icon(Icons.menu, color: Colors.white, size: 24),
+                  onPressed: () {
+                    Scaffold.of(context).openDrawer();
+                  },
+                ),
+                const SizedBox(width: 8),
+              ],
+              
+              // Hide logo on very small screens to prevent overflow
+              if (!isMobile || screenWidth > 400) ...[
+                SvgPicture.asset(
+                  "assets/logo.svg",
+                  height: isMobile ? 45 : 55,
+                  width: isMobile ? 70 : 85,
+                ),
+                SizedBox(width: isMobile ? 10 : 22),
+              ],
 
-            const SizedBox(width: 22),
+              // Search bar - hide on very small mobile screens
+              if (screenWidth > 350) ...[
+                Expanded(
+                  child: CustomSearch(),
+                ),
+                SizedBox(width: isMobile ? 8 : 12),
+              ],
 
-            const Expanded(
-              child: CustomSearch(),
-            ),
-
-            const SizedBox(width: 12),
-
-            CustomMiniButton(
-              text: "Log Out",
-              textcolor: Colors.white,
-              backgroundColor: const Color(0xffE0712D),
-              onTap: () {
-                showDialog(
-                  context: context,
-                  barrierDismissible: false,
-                  builder: (context) {
-                    return Dialog(
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(25),
-                      ),
-                      child: Padding(
-                        padding: const EdgeInsets.all(24),
-                        child: Column(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-
-                            Container(
-                              padding: const EdgeInsets.all(15),
-                              decoration: BoxDecoration(
-                                color: const Color(0xffE0712D).withOpacity(
-                                    0.1),
-                                shape: BoxShape.circle,
-                              ),
-                              child: const Icon(
-                                Icons.logout_rounded,
-                                color: Color(0xffE0712D),
-                                size: 30,
-                              ),
-                            ),
-
-                            const SizedBox(height: 20),
-
-                            const Text(
-                              "Confirm Logout",
-                              style: TextStyle(
-                                fontSize: 20,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-
-                            const SizedBox(height: 10),
-
-                            const Text(
-                              "Are you sure you want to log out from your account?",
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                fontSize: 15,
-                                color: Colors.grey,
-                              ),
-                            ),
-
-                            const SizedBox(height: 25),
-
-                            Row(
+              // Logout button - hide on very small screens
+              if (screenWidth > 400) ...[
+                CustomMiniButton(
+                  text: "Log Out",
+                  textcolor: Colors.white,
+                  backgroundColor: const Color(0xffE0712D),
+                  onTap: () {
+                    showDialog(
+                      context: context,
+                      barrierDismissible: false,
+                      builder: (context) {
+                        return Dialog(
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(25),
+                          ),
+                          child: Padding(
+                            padding: const EdgeInsets.all(24),
+                            child: Column(
+                              mainAxisSize: MainAxisSize.min,
                               children: [
-                                Expanded(
-                                  child: OutlinedButton(
-                                    style: OutlinedButton.styleFrom(
-                                      side: const BorderSide(color: Colors.grey),
-                                      shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(12),),
-                                      padding: const EdgeInsets.symmetric(vertical: 14),),
-                                    onPressed: () {
-                                      Navigator.pop(context);
-                                    },
-                                    child: const Text(
-                                      "Cancel",
-                                      style: TextStyle(color: Colors.grey),
-                                    ),
+
+                                Container(
+                                  padding: const EdgeInsets.all(15),
+                                  decoration: BoxDecoration(
+                                    color: const Color(0xffE0712D).withOpacity(
+                                        0.1),
+                                    shape: BoxShape.circle,
+                                  ),
+                                  child: const Icon(
+                                    Icons.logout_rounded,
+                                    color: Color(0xffE0712D),
+                                    size: 30,
                                   ),
                                 ),
 
-                                const SizedBox(width: 15),
+                                const SizedBox(height: 20),
 
-                                Expanded(
-                                  child: ElevatedButton(
-                                    style: ElevatedButton.styleFrom(
-                                      backgroundColor: const Color(
-                                          0xffE0712D),
-                                      shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(
-                                            12),
-                                      ),
-                                      padding: const EdgeInsets.symmetric(
-                                          vertical: 14),
-                                    ),
-                                    onPressed: () {
-                                      Navigator.pop(context);
-                                      print("User Logged Out");
-                                    },
-                                    child: const Text("Logout",
-                                      style: TextStyle(color: Colors.white),),
+                                const Text(
+                                  "Confirm Logout",
+                                  style: TextStyle(
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.bold,
                                   ),
+                                ),
+
+                                const SizedBox(height: 10),
+
+                                const Text(
+                                  "Are you sure you want to log out from your account?",
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                    fontSize: 15,
+                                    color: Colors.grey,
+                                  ),
+                                ),
+
+                                const SizedBox(height: 25),
+
+                                Row(
+                                  children: [
+                                    Expanded(
+                                      child: OutlinedButton(
+                                        style: OutlinedButton.styleFrom(
+                                          side: const BorderSide(color: Colors.grey),
+                                          shape: RoundedRectangleBorder(
+                                            borderRadius: BorderRadius.circular(12),),
+                                          padding: const EdgeInsets.symmetric(vertical: 14),),
+                                        onPressed: () {
+                                          Navigator.pop(context);
+                                        },
+                                        child: const Text(
+                                          "Cancel",
+                                          style: TextStyle(color: Colors.grey),
+                                        ),
+                                      ),
+                                    ),
+
+                                    const SizedBox(width: 15),
+
+                                    Expanded(
+                                      child: ElevatedButton(
+                                        style: ElevatedButton.styleFrom(
+                                          backgroundColor: const Color(
+                                              0xffE0712D),
+                                          shape: RoundedRectangleBorder(
+                                            borderRadius: BorderRadius.circular(
+                                                12),
+                                          ),
+                                          padding: const EdgeInsets.symmetric(
+                                              vertical: 14),
+                                        ),
+                                        onPressed: () {
+                                          Navigator.pop(context);
+                                          print("User Logged Out");
+                                        },
+                                        child: const Text("Logout",
+                                          style: TextStyle(color: Colors.white),),
+                                      ),
+                                    ),
+                                  ],
                                 ),
                               ],
                             ),
-                          ],
-                        ),
-                      ),
+                          ),
+                        );
+                      },
                     );
                   },
-                );
-              },
-            ),
-          ],
+                ),
+              ],
+            ],
+          ),
         ),
       ),
-      body: Row(
-          children: [
-            Expanded(
-              flex: 3,
-              child: FoodServiceSidebar(
-                onItemSelected: _onSidebarItemSelected,
-                selectedIndex: _selectedIndex,
-              ),
-            ),
-            Expanded(
-              flex: 8,
-              child: SingleChildScrollView(
-                padding: const EdgeInsets.symmetric(horizontal: 20),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    CustomBanner(),
-                    const SizedBox(height: 30),
-                    _buildPage(),
-                  ],
-                ),
-              ),
-            ),
-          ]
+      // Add drawer for mobile
+      drawer: isMobile ? Drawer(
+        child: FoodServiceSidebar(
+          onItemSelected: _onSidebarItemSelected,
+          selectedIndex: _selectedIndex,
+        ),
+      ) : null,
+      body: isMobile 
+        ? _buildMobileContent(getCrossAxisCount())
+        : _buildDesktopContent(getCrossAxisCount()),
+    );
+  }
+
+  // Mobile content builder (full width, no sidebar)
+  Widget _buildMobileContent(int crossAxisCount) {
+    return SingleChildScrollView(
+      padding: EdgeInsets.symmetric(horizontal: 15),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          CustomBanner(),
+          const SizedBox(height: 20),
+          _buildPage(),
+        ],
       ),
+    );
+  }
+
+  // Desktop/Tablet content builder (with sidebar)
+  Widget _buildDesktopContent(int crossAxisCount) {
+    return Row(
+      children: [
+        Expanded(
+          flex: 3,
+          child: FoodServiceSidebar(
+            onItemSelected: _onSidebarItemSelected,
+            selectedIndex: _selectedIndex,
+          ),
+        ),
+        Expanded(
+          flex: 8,
+          child: SingleChildScrollView(
+            padding: const EdgeInsets.symmetric(horizontal: 20),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                CustomBanner(),
+                const SizedBox(height: 30),
+                _buildPage(),
+              ],
+            ),
+          ),
+        ),
+      ]
     );
   }
 
@@ -446,6 +505,37 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   Widget _buildFeaturedSection() {
+    final screenWidth = MediaQuery.of(context).size.width;
+    final isMobile = screenWidth < 768;
+    final isTablet = screenWidth >= 768 && screenWidth < 1100;
+    
+    // Responsive grid columns
+    int getCrossAxisCount() {
+      if (isMobile) return 1;
+      if (isTablet) return 2;
+      return 3;
+    }
+    
+    // Responsive spacing
+    double getCrossAxisSpacing() {
+      if (isMobile) return 10;
+      if (isTablet) return 12;
+      return 15;
+    }
+    
+    double getMainAxisSpacing() {
+      if (isMobile) return 10;
+      if (isTablet) return 12;
+      return 15;
+    }
+    
+    // Responsive aspect ratio
+    double getChildAspectRatio() {
+      if (isMobile) return 1.0;
+      if (isTablet) return 1.1;
+      return 1.2;
+    }
+    
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -461,11 +551,11 @@ class _HomeScreenState extends State<HomeScreen> {
         GridView.builder(
           shrinkWrap: true,
           physics: const NeverScrollableScrollPhysics(),
-          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 3,
-            crossAxisSpacing: 15,
-            mainAxisSpacing: 15,
-            childAspectRatio: 1.2,
+          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount: getCrossAxisCount(),
+            crossAxisSpacing: getCrossAxisSpacing(),
+            mainAxisSpacing: getMainAxisSpacing(),
+            childAspectRatio: getChildAspectRatio(),
           ),
           itemCount: 7,
           itemBuilder: (context, index) {

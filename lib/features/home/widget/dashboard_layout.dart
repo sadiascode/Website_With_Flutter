@@ -34,8 +34,41 @@ class _FoodServiceSidebarState extends State<FoodServiceSidebar> {
 
   @override
   Widget build(BuildContext context) {
+    final screenWidth = MediaQuery.of(context).size.width;
+    final screenHeight = MediaQuery.of(context).size.height;
+    final isMobile = screenWidth < 600;
+    final isTablet = screenWidth >= 600 && screenWidth < 1024;
+    
+    // Responsive width calculation
+    double getSidebarWidth() {
+      if (isMobile) return 70;
+      if (isTablet) return 160;
+      return 220;
+    }
+    
+    // Responsive spacing calculation
+    double getResponsiveSpacing(double baseSpacing) {
+      if (isMobile) return baseSpacing * 0.6;
+      if (isTablet) return baseSpacing * 0.8;
+      return baseSpacing;
+    }
+    
+    // Responsive font size calculation
+    double getResponsiveFontSize(double baseFontSize) {
+      if (isMobile) return baseFontSize * 0.8;
+      if (isTablet) return baseFontSize * 0.9;
+      return baseFontSize;
+    }
+    
+    // Responsive icon size calculation
+    double getResponsiveIconSize(double baseIconSize) {
+      if (isMobile) return baseIconSize * 0.8;
+      if (isTablet) return baseIconSize * 0.9;
+      return baseIconSize;
+    }
+
     return Container(
-      width: 220,
+      width: getSidebarWidth(),
       height: double.infinity,
       decoration: BoxDecoration(
         color: _bgWhite,
@@ -71,24 +104,24 @@ class _FoodServiceSidebarState extends State<FoodServiceSidebar> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const SizedBox(height: 12),
+            SizedBox(height: getResponsiveSpacing(12)),
 
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 12),
+              padding: EdgeInsets.symmetric(horizontal: getResponsiveSpacing(12)),
               child: Column(
                 children: [
                   ...List.generate(_menuItems.length, (index) {
                     return _buildMenuItem(index);
                   }),
 
-                  const SizedBox(height: 20),
+                  SizedBox(height: getResponsiveSpacing(20)),
 
                   _buildUpgradeCard(),
                 ],
               ),
             ),
 
-            const SizedBox(height: 20),
+            SizedBox(height: getResponsiveSpacing(20)),
 
             _buildBottomSection(),
           ],
@@ -100,12 +133,38 @@ class _FoodServiceSidebarState extends State<FoodServiceSidebar> {
   Widget _buildMenuItem(int index) {
     final item = _menuItems[index];
     final bool isSelected = widget.selectedIndex == index;
+    final screenWidth = MediaQuery.of(context).size.width;
+    final screenHeight = MediaQuery.of(context).size.height;
+    final isMobile = screenWidth < 600;
+    final isTablet = screenWidth >= 600 && screenWidth < 1024;
+    
+    // Responsive helper functions
+    double getResponsiveSpacing(double baseSpacing) {
+      if (isMobile) return baseSpacing * 0.6;
+      if (isTablet) return baseSpacing * 0.8;
+      return baseSpacing;
+    }
+    
+    double getResponsiveFontSize(double baseFontSize) {
+      if (isMobile) return baseFontSize * 0.8;
+      if (isTablet) return baseFontSize * 0.9;
+      return baseFontSize;
+    }
+    
+    double getResponsiveIconSize(double baseIconSize) {
+      if (isMobile) return baseIconSize * 0.8;
+      if (isTablet) return baseIconSize * 0.9;
+      return baseIconSize;
+    }
 
     return GestureDetector(
       onTap: () => widget.onItemSelected(index),
       child: Container(
-        margin: const EdgeInsets.only(bottom: 4),
-        padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
+        margin: EdgeInsets.only(bottom: getResponsiveSpacing(4)),
+        padding: EdgeInsets.symmetric(
+          horizontal: getResponsiveSpacing(14), 
+          vertical: getResponsiveSpacing(12)
+        ),
         decoration: BoxDecoration(
           color: isSelected ? _orangePrimary : Colors.transparent,
           borderRadius: BorderRadius.circular(10),
@@ -114,18 +173,23 @@ class _FoodServiceSidebarState extends State<FoodServiceSidebar> {
           children: [
             Icon(
               item.icon,
-              size: 20,
+              size: getResponsiveIconSize(20),
               color: isSelected ? Colors.white : _textGrey,
             ),
-            const SizedBox(width: 12),
-            Text(
-              item.label,
-              style: TextStyle(
-                fontSize: 14,
-                fontWeight: isSelected ? FontWeight.w600 : FontWeight.w500,
-                color: isSelected ? Colors.white : _textDark,
+            SizedBox(width: getResponsiveSpacing(12)),
+            // Hide text on very small screens
+            if (!isMobile) ...[
+              Expanded(
+                child: Text(
+                  item.label,
+                  style: TextStyle(
+                    fontSize: getResponsiveFontSize(14),
+                    fontWeight: isSelected ? FontWeight.w600 : FontWeight.w500,
+                    color: isSelected ? Colors.white : _textDark,
+                  ),
+                ),
               ),
-            ),
+            ],
           ],
         ),
       ),
@@ -133,9 +197,26 @@ class _FoodServiceSidebarState extends State<FoodServiceSidebar> {
   }
 
   Widget _buildUpgradeCard() {
+    final screenWidth = MediaQuery.of(context).size.width;
+    final isMobile = screenWidth < 600;
+    final isTablet = screenWidth >= 600 && screenWidth < 1024;
+    
+    // Responsive helper functions
+    double getResponsiveSpacing(double baseSpacing) {
+      if (isMobile) return baseSpacing * 0.6;
+      if (isTablet) return baseSpacing * 0.8;
+      return baseSpacing;
+    }
+    
+    double getResponsiveFontSize(double baseFontSize) {
+      if (isMobile) return baseFontSize * 0.8;
+      if (isTablet) return baseFontSize * 0.9;
+      return baseFontSize;
+    }
+    
     return Container(
       width: double.infinity,
-      padding: const EdgeInsets.all(16),
+      padding: EdgeInsets.all(getResponsiveSpacing(16)),
       decoration: BoxDecoration(
         color: Color(0xffE0712D),
         borderRadius: BorderRadius.circular(16),
@@ -143,32 +224,32 @@ class _FoodServiceSidebarState extends State<FoodServiceSidebar> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text(
-            'Upgrade your account to\nget free coupon',
+          Text(
+            isMobile ? 'Upgrade\nto get coupon' : 'Upgrade your account to\nget free coupon',
             style: TextStyle(
               color: Colors.white,
-              fontSize: 12,
+              fontSize: getResponsiveFontSize(12),
               fontWeight: FontWeight.w500,
               height: 1.5,
             ),
           ),
-          const SizedBox(height: 14),
+          SizedBox(height: getResponsiveSpacing(14)),
           GestureDetector(
             onTap: () {},
             child: Container(
-              padding: const EdgeInsets.symmetric(
-                horizontal: 20,
-                vertical: 9,
+              padding: EdgeInsets.symmetric(
+                horizontal: getResponsiveSpacing(20),
+                vertical: getResponsiveSpacing(9),
               ),
               decoration: BoxDecoration(
                 color: Colors.white,
                 borderRadius: BorderRadius.circular(8),
               ),
-              child: const Text(
+              child: Text(
                 'Upgrade',
                 style: TextStyle(
                   color: _orangePrimary,
-                  fontSize: 13,
+                  fontSize: getResponsiveFontSize(13),
                   fontWeight: FontWeight.w700,
                 ),
               ),
@@ -181,11 +262,40 @@ class _FoodServiceSidebarState extends State<FoodServiceSidebar> {
 
 
   Widget _buildBottomSection() {
+    final screenWidth = MediaQuery.of(context).size.width;
+    final screenHeight = MediaQuery.of(context).size.height;
+    final isMobile = screenWidth < 600;
+    final isTablet = screenWidth >= 600 && screenWidth < 1024;
+    
+    // Responsive helper functions
+    double getResponsiveSpacing(double baseSpacing) {
+      if (isMobile) return baseSpacing * 0.6;
+      if (isTablet) return baseSpacing * 0.8;
+      return baseSpacing;
+    }
+    
+    double getResponsiveFontSize(double baseFontSize) {
+      if (isMobile) return baseFontSize * 0.8;
+      if (isTablet) return baseFontSize * 0.9;
+      return baseFontSize;
+    }
+    
+    double getResponsiveIconSize(double baseIconSize) {
+      if (isMobile) return baseIconSize * 0.8;
+      if (isTablet) return baseIconSize * 0.9;
+      return baseIconSize;
+    }
+    
     return Container(
-      padding: const EdgeInsets.fromLTRB(12, 12, 12, 28),
+      padding: EdgeInsets.fromLTRB(
+        getResponsiveSpacing(12), 
+        getResponsiveSpacing(12), 
+        getResponsiveSpacing(12), 
+        getResponsiveSpacing(28)
+      ),
       child: Column(
         children: [
-          SizedBox(height: 240),
+          SizedBox(height: getResponsiveSpacing(240)),
           _buildBottomItem(
             icon: Icons.help_outline_rounded,
             label: 'Help',
@@ -198,10 +308,10 @@ class _FoodServiceSidebarState extends State<FoodServiceSidebar> {
               );
             },
           ),
-          const SizedBox(height: 4),
+          SizedBox(height: getResponsiveSpacing(4)),
           _buildBottomItem(
             icon: Icons.delete,
-            label: 'Delete Account',
+            label: isMobile ? 'Delete' : 'Delete Account',
             onTap: () {
               showDialog(
                 context: context,
@@ -318,26 +428,57 @@ class _FoodServiceSidebarState extends State<FoodServiceSidebar> {
     required VoidCallback onTap,
     bool isLogout = false,
   }) {
+    final screenWidth = MediaQuery.of(context).size.width;
+    final isMobile = screenWidth < 600;
+    final isTablet = screenWidth >= 600 && screenWidth < 1024;
+    
+    // Responsive helper functions
+    double getResponsiveSpacing(double baseSpacing) {
+      if (isMobile) return baseSpacing * 0.6;
+      if (isTablet) return baseSpacing * 0.8;
+      return baseSpacing;
+    }
+    
+    double getResponsiveFontSize(double baseFontSize) {
+      if (isMobile) return baseFontSize * 0.8;
+      if (isTablet) return baseFontSize * 0.9;
+      return baseFontSize;
+    }
+    
+    double getResponsiveIconSize(double baseIconSize) {
+      if (isMobile) return baseIconSize * 0.8;
+      if (isTablet) return baseIconSize * 0.9;
+      return baseIconSize;
+    }
+    
     return GestureDetector(
       onTap: onTap,
       child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
+        padding: EdgeInsets.symmetric(
+          horizontal: getResponsiveSpacing(14), 
+          vertical: getResponsiveSpacing(12)
+        ),
         child: Row(
           children: [
             Icon(
               icon,
-              size: 20,
+              size: getResponsiveIconSize(20),
               color: isLogout ? Color(0xffE0712D) : _textGrey,
             ),
-            const SizedBox(width: 12),
-            Text(
-              label,
-              style: TextStyle(
-                fontSize: 14,
-                fontWeight: FontWeight.w500,
-                color: isLogout ? Color(0xffE0712D): _textDark,
+            SizedBox(width: getResponsiveSpacing(12)),
+            // Hide text on very small screens
+            if (!isMobile) ...[
+              Expanded(
+                child: Text(
+                  label,
+                  style: TextStyle(
+                    fontSize: getResponsiveFontSize(14),
+                    fontWeight: FontWeight.w500,
+                    color: isLogout ? Color(0xffE0712D): _textDark,
+                  ),
+                ),
               ),
-            ),
+            ],
           ],
         ),
       ),
