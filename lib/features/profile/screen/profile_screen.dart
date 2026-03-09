@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:foodservice/features/profile/screen/myprofile_screen.dart';
+import 'package:foodservice/features/profile/screen/privecy_screen.dart';
+import 'package:foodservice/features/profile/screen/terms_screen.dart';
 import 'dart:io';
 
 import '../../commo/custom_button.dart';
@@ -183,10 +185,24 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
               SizedBox(height: 10),
 
-              CustomNew(text: "Privacy Policy"),
+              CustomNew(text: "Privacy Policy", onTap: (){
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const PrivecyScreen(),
+                  ),
+                );
+              }),
               SizedBox(height: 10),
 
-              CustomNew(text: "Terms and Conditions"),
+              CustomNew(text: "Terms and Conditions", onTap: (){
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const TermsScreen(),
+                  ),
+                );
+              }),
               SizedBox(height: 10),
 
               CustomNew(text: "Delete Account",onTap: (){
