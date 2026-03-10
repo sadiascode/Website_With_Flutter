@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:foodservice/features/commo/custom_button.dart';
+import 'package:foodservice/features/home/screen/home_screen.dart';
 
 import '../widget/payment_popup.dart';
 import '../widget/paypal_popup.dart';
@@ -320,8 +321,12 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
                 CustomButton(
                   text: "Back to Home",
                   onTap: () {
-                    Navigator.pop(context);
-                    Navigator.pop(context);
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) =>  const HomeScreen()
+                      ),
+                    );
                   },
                 )
               ],
