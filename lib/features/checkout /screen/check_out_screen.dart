@@ -47,19 +47,16 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
 
       body: Padding(
         padding: const EdgeInsets.all(16),
-
         child: Column(
           children: [
 
             /// Total Amount
             Container(
               padding: const EdgeInsets.all(16),
-
               decoration: BoxDecoration(
                 color: const Color(0xFFFFF0E6),
                 borderRadius: BorderRadius.circular(12),
               ),
-
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -100,9 +97,7 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
             const SizedBox(height: 15),
 
             paymentTile(0, Icons.credit_card, "Credit / Debit Card"),
-
             paymentTile(1, Icons.account_balance_wallet, "Paypal"),
-
             paymentTile(2, Icons.money, "Cash on Delivery"),
 
             const Spacer(),
@@ -122,7 +117,6 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
   Widget paymentTile(int index, IconData icon, String title) {
 
     return GestureDetector(
-
       onTap: () {
 
         setState(() {
@@ -148,19 +142,72 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
               );
             },
           );
+        }
 
+        /// Cash On Delivery Popup
+        if(index == 2){
+
+          showDialog(
+            context: context,
+            builder: (context){
+              return Dialog(
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(20),
+                ),
+
+                child: Padding(
+                  padding: const EdgeInsets.all(24),
+
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+
+                      const Icon(
+                        Icons.delivery_dining,
+                        color: Color(0xffE0712D),
+                        size: 55,
+                      ),
+
+                      const SizedBox(height: 15),
+
+                      const Text(
+                        "Cash on Delivery",
+                        style: TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+
+                      const SizedBox(height: 10),
+
+                      const Text(
+                        "You will pay when the order arrives at your door.",
+                        textAlign: TextAlign.center,
+                      ),
+
+                      const SizedBox(height: 20),
+
+                      CustomButton(
+                        text: "Confirm Order",
+                        onTap: (){
+                          Navigator.pop(context);
+                        },
+                      )
+                    ],
+                  ),
+                ),
+              );
+            },
+          );
         }
 
       },
 
       child: Container(
-
         margin: const EdgeInsets.only(bottom: 12),
-
         padding: const EdgeInsets.all(14),
 
         decoration: BoxDecoration(
-
           color: selectedPayment == index
               ? const Color(0xFFFFF0E6)
               : Colors.white,
@@ -229,7 +276,7 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
                 const SizedBox(height: 15),
 
                 const Text(
-                  "Payment Successful",
+                  "Order Successful",
                   style: TextStyle(
                     fontSize: 20,
                     fontWeight: FontWeight.bold,
@@ -258,12 +305,8 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
         );
       },
     );
-
   }
-
 }
-
-/// CARD PAYMENT POPUP
 
 class PaymentPopup extends StatefulWidget {
 
@@ -373,41 +416,22 @@ class _PaymentPopupState extends State<PaymentPopup> {
                   context: context,
                   builder: (context){
                     return AlertDialog(
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(12),
+                      icon: const Icon(
+                        Icons.check_circle,
+                        color: Colors.green,
+                        size: 40,
                       ),
-
                       title: const Text("Payment Successful"),
-
-                      content: RichText(
-                        text: const TextSpan(
-                          style: TextStyle(color: Colors.black, fontSize: 14),
-                          children: [
-                            TextSpan(text: "Your order has been placed "),
-                            WidgetSpan(
-                              child: Icon(
-                                Icons.check_circle,
-                                color: Colors.green,
-                                size: 18,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-
-
+                      content: const Text("Your order has been placed."),
                       actions: [
                         TextButton(
                           onPressed: (){
                             Navigator.pop(context);
                           },
-                          child: Center(
-                            child: const Text(
+                          child: const Center(
+                            child: Text(
                               "OK",
-                              style: TextStyle(
-                                color: Color(0xffE0712D),
-                                fontWeight: FontWeight.bold,
-                              ),
+                              style: TextStyle(color: Color(0xffE0712D)),
                             ),
                           ),
                         ),
@@ -415,7 +439,6 @@ class _PaymentPopupState extends State<PaymentPopup> {
                     );
                   },
                 );
-
 
               },
             )
