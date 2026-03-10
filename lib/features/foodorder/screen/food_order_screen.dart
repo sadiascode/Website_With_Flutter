@@ -65,7 +65,7 @@ class FoodOrderScreen extends StatelessWidget {
 
                           const SizedBox(height: 16),
                           const Text(
-                            "Are you sure you want to clear all your Food Order?",
+                            "Are you sure you want to clear all your food order?",
                             style: TextStyle(
                               color: Colors.black,
                               fontSize: 15,

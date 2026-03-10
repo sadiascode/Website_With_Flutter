@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:foodservice/features/auth/screen/login_screen.dart';
 import 'package:foodservice/features/profile/screen/myprofile_screen.dart';
 import 'package:foodservice/features/profile/screen/privecy_screen.dart';
 import 'package:foodservice/features/profile/screen/terms_screen.dart';
@@ -342,7 +343,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                   const SizedBox(width: 12),
                                   TextButton(
                                     onPressed: () {
-                                      Navigator.of(context).pop();
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) => const LoginScreen(),
+                                        ),
+                                      );
                                     },
                                     child: const Text(
                                       "Sign Out",

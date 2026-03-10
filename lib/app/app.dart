@@ -11,7 +11,7 @@ class FoodService extends StatelessWidget {
     return MaterialApp(
       title: "Food Service",
       debugShowCheckedModeBanner: false,
-      home: HomeScreen(),
+      home: SplashScreen(),
     );
   }
 }
