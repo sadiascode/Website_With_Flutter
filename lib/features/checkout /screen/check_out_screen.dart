@@ -123,7 +123,7 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
           selectedPayment = index;
         });
 
-        /// Credit Card Popup
+        //Credit Card Popup
         if(index == 0){
 
           showDialog(
@@ -144,7 +144,7 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
           );
         }
 
-        /// Cash On Delivery Popup
+        // Cash On Delivery Popup
         if(index == 2){
 
           showDialog(
