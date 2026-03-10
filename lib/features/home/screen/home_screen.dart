@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:foodservice/features/checkout%20/screen/check_out_screen.dart';
+import 'package:foodservice/features/checkout%20/screen/view_cart_screen.dart';
 import 'package:foodservice/features/history/screen/history_screen.dart';
 import 'package:foodservice/features/home/widget/custom_banner.dart';
 import 'package:foodservice/features/home/widget/dashboard_layout.dart';
@@ -763,7 +765,18 @@ class _HomeScreenState extends State<HomeScreen> {
                               const Spacer(),
 
                               ElevatedButton(
-                                onPressed: () {},
+                                onPressed: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) =>  ViewCartScreen(
+                                        name: foodNames[index],
+                                        price: prices[index],
+                                        image: imagePaths[index],
+                                      ),
+                                    ),
+                                  );
+                                },
                                 style: ElevatedButton.styleFrom(
                                   backgroundColor:
                                   const Color(0xffE0712D),
