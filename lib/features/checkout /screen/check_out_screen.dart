@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
-
+import 'package:foodservice/features/commo/custom_button.dart';
 
 class CheckOutScreen extends StatefulWidget {
-  const CheckOutScreen({super.key});
+  final double totalPrice;
 
+  const CheckOutScreen({super.key, required this.totalPrice});
 
   @override
   State<CheckOutScreen> createState() => _CheckOutScreenState();
@@ -11,171 +12,414 @@ class CheckOutScreen extends StatefulWidget {
 
 class _CheckOutScreenState extends State<CheckOutScreen> {
 
-
-  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  int selectedPayment = 0;
 
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
+      backgroundColor: const Color(0xFFFFFAF7),
+
       appBar: AppBar(
-        title: const Text("Checkout"),
         centerTitle: true,
+        elevation: 0,
+        backgroundColor: Colors.white,
+
+        leading: IconButton(
+          onPressed: () {
+            Navigator.pop(context);
+          },
+          icon: const Icon(
+            Icons.arrow_back_ios,
+            color: Color(0xffE0712D),
+            size: 18,
+          ),
+        ),
+
+        title: const Text(
+          "Payment",
+          style: TextStyle(
+            color: Color(0xffE0712D),
+            fontSize: 20,
+            fontWeight: FontWeight.w500,
+          ),
+        ),
       ),
 
-      body: SafeArea(
-        child: SingleChildScrollView(
-          padding: const EdgeInsets.all(16),
+      body: Padding(
+        padding: const EdgeInsets.all(16),
 
-          child: Form(
-            key: _formKey,
+        child: Column(
+          children: [
+
+            /// Total Amount
+            Container(
+              padding: const EdgeInsets.all(16),
+
+              decoration: BoxDecoration(
+                color: const Color(0xFFFFF0E6),
+                borderRadius: BorderRadius.circular(12),
+              ),
+
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+
+                  const Text(
+                    "Total Amount",
+                    style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+
+                  Text(
+                    "\$${widget.totalPrice.toStringAsFixed(2)}",
+                    style: const TextStyle(
+                      fontSize: 18,
+                      color: Color(0xffE0712D),
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+
+            const SizedBox(height: 25),
+
+            const Align(
+              alignment: Alignment.centerLeft,
+              child: Text(
+                "Select Payment Method",
+                style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ),
+
+            const SizedBox(height: 15),
+
+            paymentTile(0, Icons.credit_card, "Credit / Debit Card"),
+
+            paymentTile(1, Icons.account_balance_wallet, "Paypal"),
+
+            paymentTile(2, Icons.money, "Cash on Delivery"),
+
+            const Spacer(),
+
+            CustomButton(
+              text: "Pay Now",
+              onTap: () {
+                showSuccessDialog();
+              },
+            )
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget paymentTile(int index, IconData icon, String title) {
+
+    return GestureDetector(
+
+      onTap: () {
+
+        setState(() {
+          selectedPayment = index;
+        });
+
+        /// Credit Card Popup
+        if(index == 0){
+
+          showDialog(
+            context: context,
+            builder: (context) {
+              return Dialog(
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(20),
+                ),
+                child: SizedBox(
+                  height: 420,
+                  child: PaymentPopup(
+                    totalPrice: widget.totalPrice,
+                  ),
+                ),
+              );
+            },
+          );
+
+        }
+
+      },
+
+      child: Container(
+
+        margin: const EdgeInsets.only(bottom: 12),
+
+        padding: const EdgeInsets.all(14),
+
+        decoration: BoxDecoration(
+
+          color: selectedPayment == index
+              ? const Color(0xFFFFF0E6)
+              : Colors.white,
+
+          borderRadius: BorderRadius.circular(10),
+
+          border: Border.all(
+            color: selectedPayment == index
+                ? const Color(0xffE0712D)
+                : Colors.grey.shade300,
+          ),
+        ),
+
+        child: Row(
+          children: [
+
+            Icon(icon, color: const Color(0xffE0712D)),
+
+            const SizedBox(width: 12),
+
+            Expanded(
+              child: Text(
+                title,
+                style: const TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.w500,
+                ),
+              ),
+            ),
+
+            if (selectedPayment == index)
+              const Icon(
+                Icons.check_circle,
+                color: Color(0xffE0712D),
+              )
+          ],
+        ),
+      ),
+    );
+  }
+
+  void showSuccessDialog(){
+
+    showDialog(
+      context: context,
+      builder: (context) {
+        return Dialog(
+
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(20),
+          ),
+
+          child: Padding(
+            padding: const EdgeInsets.all(24),
+
             child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisSize: MainAxisSize.min,
               children: [
 
-                const SizedBox(height: 20),
+                const Icon(
+                  Icons.check_circle,
+                  color: Colors.green,
+                  size: 60,
+                ),
+
+                const SizedBox(height: 15),
 
                 const Text(
-                  "Customer Information",
+                  "Payment Successful",
                   style: TextStyle(
                     fontSize: 20,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
 
+                const SizedBox(height: 10),
+
+                const Text(
+                  "Your order has been placed successfully.",
+                  textAlign: TextAlign.center,
+                ),
+
                 const SizedBox(height: 20),
 
-                TextFormField(
-                  decoration: const InputDecoration(
-                    hintText: "First Name",
-                    border: OutlineInputBorder(),
-                  ),
-                  validator: (value){
-                    if(value!.isEmpty){
-                      return "Enter first name";
-                    }
-                    return null;
+                CustomButton(
+                  text: "Back to Home",
+                  onTap: () {
+                    Navigator.pop(context);
+                    Navigator.pop(context);
                   },
+                )
+              ],
+            ),
+          ),
+        );
+      },
+    );
+
+  }
+
+}
+
+/// CARD PAYMENT POPUP
+
+class PaymentPopup extends StatefulWidget {
+
+  final double totalPrice;
+
+  const PaymentPopup({super.key, required this.totalPrice});
+
+  @override
+  State<PaymentPopup> createState() => _PaymentPopupState();
+}
+
+class _PaymentPopupState extends State<PaymentPopup> {
+
+  final cardNumber = TextEditingController();
+  final cardHolder = TextEditingController();
+  final expiry = TextEditingController();
+  final cvv = TextEditingController();
+
+  @override
+  Widget build(BuildContext context) {
+
+    return Padding(
+      padding: const EdgeInsets.all(16),
+
+      child: SingleChildScrollView(
+        child: Column(
+
+          children: [
+
+            const Text(
+              "Card Payment",
+              style: TextStyle(
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+
+            const SizedBox(height: 20),
+
+            TextField(
+              controller: cardNumber,
+              decoration: InputDecoration(
+                hintText: "Card Number",
+                prefixIcon: const Icon(Icons.credit_card),
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(10),
                 ),
+              ),
+            ),
 
-                const SizedBox(height: 12),
+            const SizedBox(height: 12),
 
-                TextFormField(
-                  decoration: const InputDecoration(
-                    hintText: "Last Name",
-                    border: OutlineInputBorder(),
-                  ),
+            TextField(
+              controller: cardHolder,
+              decoration: InputDecoration(
+                hintText: "Card Holder Name",
+                prefixIcon: const Icon(Icons.person),
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(10),
                 ),
+              ),
+            ),
 
-                const SizedBox(height: 12),
+            const SizedBox(height: 12),
 
-                TextFormField(
-                  keyboardType: TextInputType.phone,
-                  decoration: const InputDecoration(
-                    hintText: "Mobile Number",
-                    border: OutlineInputBorder(),
-                  ),
-                ),
+            Row(
+              children: [
 
-                const SizedBox(height: 12),
-
-                TextFormField(
-                  keyboardType: TextInputType.emailAddress,
-                  decoration: const InputDecoration(
-                    hintText: "Email",
-                    border: OutlineInputBorder(),
-                  ),
-                ),
-
-                const SizedBox(height: 12),
-
-                TextFormField(
-                  maxLines: 3,
-                  decoration: const InputDecoration(
-                    hintText: "Shipping Address",
-                    border: OutlineInputBorder(),
-                  ),
-                ),
-
-                const SizedBox(height: 25),
-
-
-                Card(
-                  elevation: 3,
-                  child: Padding(
-                    padding: const EdgeInsets.all(16),
-                    child: Column(
-                      children: const [
-
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text("Subtotal"),
-                            Text("৳450"),
-                          ],
-                        ),
-
-                        SizedBox(height: 8),
-
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text("Delivery Fee"),
-                            Text("৳50"),
-                          ],
-                        ),
-
-                        Divider(),
-
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(
-                              "Total",
-                              style: TextStyle(
-                                  fontWeight: FontWeight.bold
-                              ),
-                            ),
-                            Text(
-                              "৳500",
-                              style: TextStyle(
-                                  fontWeight: FontWeight.bold
-                              ),
-                            ),
-                          ],
-                        ),
-
-                      ],
+                Expanded(
+                  child: TextField(
+                    controller: expiry,
+                    decoration: InputDecoration(
+                      hintText: "MM/YY",
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10),
+                      ),
                     ),
                   ),
                 ),
 
-                const SizedBox(height: 25),
+                const SizedBox(width: 10),
 
-                SizedBox(
-                  width: double.infinity,
-                  height: 50,
-
-                  child: ElevatedButton(
-                    onPressed: (){
-                      if(_formKey.currentState!.validate()){
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(
-                            content: Text("Checkout button pressed"),
-                          ),
-                        );
-                      }
-                    },
-
-                    child: const Text(
-                      "Place Order",
-                      style: TextStyle(fontSize: 18),
+                Expanded(
+                  child: TextField(
+                    controller: cvv,
+                    obscureText: true,
+                    decoration: InputDecoration(
+                      hintText: "CVV",
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10),
+                      ),
                     ),
                   ),
                 ),
               ],
             ),
-          ),
+
+            const SizedBox(height: 20),
+
+            CustomButton(
+              text: "Pay \$${widget.totalPrice.toStringAsFixed(2)}",
+              onTap: () {
+
+                Navigator.pop(context);
+
+                showDialog(
+                  context: context,
+                  builder: (context){
+                    return AlertDialog(
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+
+                      title: const Text("Payment Successful"),
+
+                      content: RichText(
+                        text: const TextSpan(
+                          style: TextStyle(color: Colors.black, fontSize: 14),
+                          children: [
+                            TextSpan(text: "Your order has been placed "),
+                            WidgetSpan(
+                              child: Icon(
+                                Icons.check_circle,
+                                color: Colors.green,
+                                size: 18,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+
+
+                      actions: [
+                        TextButton(
+                          onPressed: (){
+                            Navigator.pop(context);
+                          },
+                          child: Center(
+                            child: const Text(
+                              "OK",
+                              style: TextStyle(
+                                color: Color(0xffE0712D),
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    );
+                  },
+                );
+
+
+              },
+            )
+          ],
         ),
       ),
     );

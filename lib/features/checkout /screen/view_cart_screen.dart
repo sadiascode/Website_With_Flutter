@@ -215,7 +215,7 @@ class _ViewCartScreenState extends State<ViewCartScreen> {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => const CheckOutScreen(),
+                      builder: (context) =>  CheckOutScreen(totalPrice: totalPrice,),
                     ),
                   );
                 })
